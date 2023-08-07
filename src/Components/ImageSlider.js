@@ -1,11 +1,24 @@
 import React from 'react'
 import './ImageSlider.css'
-import { Carousel } from 'react-bootstrap'
+// import { Carousel } from 'react-bootstrap'
+
+import banner_img from '../assets/images/banner-img.jpg'
 
 function ImageSlider() {
     return (
-        <div className='slider'>
-            <Carousel>
+        <div className='banner'>
+            <div className="write-up">
+                <h1 className='main-heading'>Welcome to the FUTO Library</h1> 
+                <p className='heading'>Feed your Brain</p>
+                <p className='note'>
+                    Get books in all courses, General books on different aspect of life (Finance, Lifestyle, etc.).
+                    We only give you the best
+                </p>
+            </div>
+            <div className="img">
+                <img alt='' src={banner_img} />
+            </div>
+            {/* <Carousel>
                 <Carousel.Item interval={1000}>
                     <img
                         className="d-block w-100"
@@ -39,7 +52,7 @@ function ImageSlider() {
                         <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
                     </Carousel.Caption>
                 </Carousel.Item>
-            </Carousel>
+            </Carousel> */}
         </div>
     )
 }

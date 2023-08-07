@@ -9,22 +9,24 @@ import PopularBooks from '../Components/PopularBooks'
 import RecentAddedBooks from '../Components/RecentAddedBooks'
 import ReservedBooks from '../Components/ReservedBooks'
 import Stats from '../Components/Stats'
-import WelcomeBox from '../Components/WelcomeBox'
+
+import Header from '../Components/Header';
+
 
 function Home() {
     return (
-        <div id='home'>
-            <ImageSlider/>
-            <WelcomeBox/>
-            <About/>
-            <Stats/>
-            <RecentAddedBooks/>
-            <PopularBooks/>
-            <ReservedBooks/>
-            <News/>
-            <PhotoGallery/>
-            <Footer/>
-        </div>
+        <>
+            <Header />
+            <div id='home'>
+                <ImageSlider/>
+                <About/>
+                <Stats/>
+                <RecentAddedBooks/>
+                <PopularBooks/>
+                <ReservedBooks/>
+                <Footer/>
+            </div>
+        </>
     )
 }
 

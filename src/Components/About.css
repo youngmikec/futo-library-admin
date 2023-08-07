@@ -1,7 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
-
 .about-box{
-    background-color: rgb(16,25,13);
+    /* background-color: #40B142; */
+    padding: 30px 150px;
 }
 
 /* Mobile View */
@@ -15,25 +14,28 @@
         font-size: 13px;
         font-family:'Poppins', sans-serif ;
         text-align: justify;
-        padding: 15px;
-        color: rgb(220,225,219);
     }
 }
 
 /* Desktop View */
 .about-title{
     position: relative;
-    color: rgb(238,129,30);
-    text-align: center;
-    font-size: 32px;
-    padding: 25px;
+    text-align: left;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: rgb(65, 63, 63);
 }
 
 .about-img img{
     width: 100%;
     max-width: 700px;
     border-radius: 25px;
-    padding: 15px;
+}
+
+.about-data p {
+    color: rgb(90, 88, 88);
+    font-size: 16px;
 }
 
 @media screen and (min-width:768px) {
@@ -41,10 +43,7 @@
         margin-left: 50px;
         margin-right: 50px;
         font-size: 15px;
-        font-family:'Poppins', sans-serif ;
         text-align: justify;
-        color: rgb(220,225,219);
-        padding: 15px;
     }
     .about-data{
         display: grid;

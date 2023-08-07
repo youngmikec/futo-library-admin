@@ -32,8 +32,8 @@ function AddMember() {
     ]
 
     const userTypes = [
-        { value: 'Staff', text: 'Staff' },
-        { value: 'Student', text: 'Student' }
+        { value: 'STAFF', text: 'Staff' },
+        { value: 'STUDENT', text: 'Student' }
     ]
 
     //Add a Member
@@ -55,7 +55,7 @@ function AddMember() {
                 password: password
             }
             try {
-                const response = await axios.post(API_URL + "api/auth/register", userData)
+                const response = await axios.post(API_URL + "auth/register", userData)
                 if (recentAddedMembers.length >= 5) {
                     recentAddedMembers.splice(-1)
                 }

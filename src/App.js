@@ -3,10 +3,10 @@ import Signin from './Pages/Signin'
 import { BrowserRouter as Router, Switch, Redirect, Route } from "react-router-dom";
 import MemberDashboard from './Pages/Dashboard/MemberDashboard/MemberDashboard.js';
 import Allbooks from './Pages/Allbooks';
-import Header from './Components/Header';
 import AdminDashboard from './Pages/Dashboard/AdminDashboard/AdminDashboard.js';
 import { useContext } from "react"
 import { AuthContext } from "./Context/AuthContext.js"
+import Header from './Components/Header';
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
 
   return (
     <Router>
-      <Header />
+      
       <div className="App">
         <Switch>
           <Route exact path='/'>
@@ -33,6 +33,7 @@ function App() {
             <AdminDashboard />
           </Route>
           <Route exact path='/books'>
+            <Header />
             <Allbooks />
           </Route>
         </Switch>

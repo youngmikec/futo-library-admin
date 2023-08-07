@@ -1,7 +1,8 @@
 .recentaddedbooks-container{
-    background-color: rgb(16,25,13);
+    background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
+    margin-bottom: 40px;
 }
 
 .recentbooks{
@@ -18,10 +19,13 @@
 }
 
 .recentbooks-title{
+    padding: 30px 150px;
     position: relative;
-    color: rgb(238,129,30);
-    font-size: 32px;
-    text-align: center;
+    text-align: left;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: rgb(65, 63, 63);
 }
 
 .recent-book:hover{

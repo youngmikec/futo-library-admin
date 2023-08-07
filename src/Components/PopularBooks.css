@@ -1,7 +1,8 @@
 .popularbooks-container{
-    background-color: rgb(247,235,215);
+    background-color: #f4f4f4;
     display: flex;
     flex-direction: column;
+    padding-bottom: 40px;
 }
 
 .popularbooks{
@@ -19,12 +20,13 @@
 }
 
 .popularbooks-title{
+    padding: 30px 150px;
     position: relative;
-    color: #0E2431;
-    margin-top: 20px;
-    margin-bottom: 50px;
-    text-align: center;
-    font-size: 32px;
+    text-align: left;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: rgb(65, 63, 63);
 }
 
 .popular-book:hover{

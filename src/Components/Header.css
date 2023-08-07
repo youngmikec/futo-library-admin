@@ -8,19 +8,23 @@
     width: 100%;
     position: fixed;
     z-index: 100;
-    background-color: rgb(16,25,13);
-    box-shadow: 0 1px 4px rgba(146,161,176,.15);
+    background-color: #F4F2EE;
+    box-shadow: 0 4px 4px rgba(146,161,176,.15);
     top: 0%;
 }
 
 .logo-nav a{
     font-size: 20px;
-    color: rgb(233,83,75);
+    color: black;
     font-weight: 800;
 }
 
+.futo {
+    color: #40b142;
+}
+
 .logo-nav a:hover{
-    color: wheat;
+    color: #40b142;
     transition: all ease 0.5s;
 }
 
@@ -59,7 +63,7 @@
 }
 
 .option a{
-    color: rgb(233,83,75);
+    color: black;
     display: flex;
     align-items: center;
     font-weight: 800;
@@ -67,7 +71,7 @@
 }
 
 .option a:hover{
-    color: wheat;
+    color: #40b142;
     transition: all ease 0.5s;
 }
 
@@ -126,7 +130,7 @@ a{
     .menu-icon{
         width: 45px;
         height: 45px;
-        color: rgb(233,83,75);
+        color: black;
         padding: 2px;
         background-color: rgb(246, 233, 202);
         border-radius: 5px;

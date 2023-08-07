@@ -1,11 +1,40 @@
-.slider{
+.banner{
     width: 100%;
-    height: auto;
+    height: 80vh;
+    background: #F4F2EE;
+    margin-top: 4%;
+    display: flex;
+    justify-content: space-evenly;
 }
 
-img{
-    width: auto;
-    height: 500px;
+.banner .write-up {
+    width: 40%;
+    margin: 10% 0;
+}
+
+.banner .write-up .main-heading {
+    font-size: 40px;
+    font-weight: 600;
+    color: rgb(65, 63, 63);
+}
+
+.banner .write-up .note {
+    margin-top: 10px;
+    font-size: 16px;
+    color: rgb(90, 88, 88);
+}
+
+.banner .write-up .heading {
+    font-size: 25px;
+    margin: 30px 0px;
+}
+
+.banner .img{
+    height: inherit;
+}
+
+.banner .img img {
+    height: inherit;
 }
 
 /* Mobile View */
