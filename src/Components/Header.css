@@ -70,6 +70,10 @@
     font-size: 18px;
 }
 
+.signout a {
+    color: red !important;
+}
+
 .option a:hover{
     color: #40b142;
     transition: all ease 0.5s;

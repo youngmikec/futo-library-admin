@@ -5,10 +5,9 @@ import { AuthContext } from '../Context/AuthContext.js'
 import Switch from '@material-ui/core/Switch';
 
 function Signin() {
-    const [isStudent, setIsStudent] = useState(true)
-    const [admissionId, setAdmissionId] = useState()
-    const [employeeId,setEmployeeId] = useState()
+    const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    // const [userType, setUserType] = useState('STUDENT')
     const [error, setError] = useState("")
     const { dispatch } = useContext(AuthContext)
 
@@ -17,7 +16,7 @@ function Signin() {
     const loginCall = async (userCredential, dispatch) => {
         dispatch({ type: "LOGIN_START" });
         try {
-            const res = await axios.post(API_URL+"api/auth/signin", userCredential);
+            const res = await axios.post(API_URL+"auth/login", userCredential);
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
         }
         catch (err) {
@@ -28,9 +27,7 @@ function Signin() {
 
     const handleForm = (e) => {
         e.preventDefault()
-        isStudent
-        ? loginCall({ admissionId, password }, dispatch)
-        : loginCall({ employeeId,password }, dispatch)
+        loginCall({ email, password }, dispatch)
     }
 
     return (
@@ -39,19 +36,19 @@ function Signin() {
                 <form onSubmit={handleForm}>
                     <h2 className="signin-title"> Log in</h2>
                     <p className="line"></p>
-                    <div className="persontype-question">
-                        <p>Are you a Staff member ?</p>
+                    {/* <div className="persontype-question">
+                        <p>Are you Admin member ?</p>
                         <Switch
-                            onChange={() => setIsStudent(!isStudent)}
+                            onChange={() => setUserType('ADMIN')}
                             color="primary"
                         />
-                    </div>
+                    </div> */}
                     <div className="error-message"><p>{error}</p></div>
                     <div className="signin-fields">
-                        <label htmlFor={isStudent?"admissionId":"employeeId"}> <b>{isStudent?"Admission ID":"Employee ID"}</b></label>
-                        <input className='signin-textbox' type="text" placeholder={isStudent?"Enter Admission ID":"Enter Employee ID"} name={isStudent?"admissionId":"employeeId"} required onChange={(e) => { isStudent?setAdmissionId(e.target.value):setEmployeeId(e.target.value) }}/>
+                        <label htmlFor='email'> <b>Email</b></label>
+                        <input className='signin-textbox' type="text" placeholder="studentuser@gmail.com" name="email" required onChange={(e) => { setEmail(e.target.value) }}/>
                         <label htmlFor="password"><b>Password</b></label>
-                        <input className='signin-textbox' type="password" minLength='6' placeholder="Enter Password" name="psw" required onChange={(e) => { setPassword(e.target.value) }} />
+                        <input className='signin-textbox' type="password" minLength='6' placeholder="Enter Password" name="password" required onChange={(e) => { setPassword(e.target.value) }} />
                         </div>
                     <button className="signin-button">Log In</button>
                     <a className="forget-pass" href="#home">Forgot password?</a>

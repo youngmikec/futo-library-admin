@@ -11,6 +11,7 @@ import Header from './Components/Header';
 function App() {
 
   const { user } = useContext(AuthContext)
+  console.log(user)
 
   return (
     <Router>
@@ -21,16 +22,17 @@ function App() {
             <Home />
           </Route>
           <Route exact path='/signin'>
-            {user ? (user.isAdmin ? <Redirect to='/dashboard@admin' />:<Redirect to='/dashboard@member' />) : <Signin />}
+            {user ? (user.payload?.user?.isAdmin ? <Redirect to='/dashboard@admin' />:<Redirect to='/dashboard@member' />) : <Signin />}
           </Route>
           <Route exact path='/dashboard@member'>
-            {user ? (user.isAdmin === false ? <MemberDashboard /> : <Redirect to='/' />) : <Redirect to='/' />}
+            {/* {user ? (user.payload?.user?.isAdmin === false ? <MemberDashboard /> : <Redirect to='/' />) : <Redirect to='/' />} */}
+            <MemberDashboard />
           </Route>
           {/* <Route exact path='/dashboard@admin'>
             {user ? (user.isAdmin === true ? <AdminDashboard /> : <Redirect to='/' />) : <Redirect to='/' />}
           </Route> */}
           <Route exact path='/dashboard@admin'>
-            <AdminDashboard />
+            {user ? (user.payload.user.isAdmin ? <AdminDashboard/>:<MemberDashboard />) : <Redirect to='/' />}
           </Route>
           <Route exact path='/books'>
             <Header />

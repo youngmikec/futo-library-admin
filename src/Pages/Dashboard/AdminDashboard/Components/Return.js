@@ -130,7 +130,7 @@ function Return() {
                     onChange={(event, data) => setBorrowerId(data.value)}
                 />
             </div>
-            <p className="dashboard-option-title">Issued</p>
+            <p className="table-header">Issued</p>
             <table className="admindashboard-table">
                     <tr>
                         <th>Book Name</th>
@@ -161,37 +161,37 @@ function Return() {
                             )
                         })
                     }
-                </table>
-                <p className="dashboard-option-title">Reserved</p>
+            </table>
+            <p className="table-header">Reserved</p>
             <table className="admindashboard-table">
-                    <tr>
-                        <th>Book Name</th>
-                        <th>Borrower Name</th>
-                        <th>From Date</th>
-                        <th>To Date</th>
-                        <th></th>
-                    </tr>
-                    {
-                        allTransactions?.filter((data)=>{
-                            if(borrowerId === null){
-                                return data.transactionType === "Reserved"
-                            }
-                            else{
-                                return data.borrowerId === borrowerId && data.transactionType === "Reserved"
-                            }
-                        }).map((data, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{data.bookName}</td>
-                                    <td>{data.borrowerName}</td>
-                                    <td>{data.fromDate}</td>
-                                    <td>{data.toDate}</td>
-                                    <td><button onClick={()=>{convertToIssue(data._id)}}>Convert</button></td>
-                                </tr>
-                            )
-                        })
-                    }
-                </table>
+                <tr>
+                    <th>Book Name</th>
+                    <th>Borrower Name</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th></th>
+                </tr>
+                {
+                    allTransactions?.filter((data)=>{
+                        if(borrowerId === null){
+                            return data.transactionType === "Reserved"
+                        }
+                        else{
+                            return data.borrowerId === borrowerId && data.transactionType === "Reserved"
+                        }
+                    }).map((data, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{data.bookName}</td>
+                                <td>{data.borrowerName}</td>
+                                <td>{data.fromDate}</td>
+                                <td>{data.toDate}</td>
+                                <td><button onClick={()=>{convertToIssue(data._id)}}>Convert</button></td>
+                            </tr>
+                        )
+                    })
+                }
+            </table>
         </div>
     )
 }

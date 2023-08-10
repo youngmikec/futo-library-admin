@@ -1,13 +1,15 @@
-import { React, useState } from 'react'
+import { React, useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Header.css'
 
 import MenuIcon from '@material-ui/icons/Menu';
 import ClearIcon from '@material-ui/icons/Clear';
+import { AuthContext } from '../Context/AuthContext';
 
 function Header() {
 
     const [menutoggle, setMenutoggle] = useState(false)
+    const { user } = useContext(AuthContext)
 
     const Toggle = () => {
         setMenutoggle(!menutoggle)
@@ -15,6 +17,11 @@ function Header() {
 
     const closeMenu = () => {
         setMenutoggle(false)
+    }
+
+    const logout = () => {
+        localStorage.removeItem('user')
+        window.history('/')
     }
 
     return (
@@ -37,11 +44,14 @@ function Header() {
                         <a href="#books">Books</a>
                         </Link>
                     </li>
-                    <li className="option" onClick={() => { closeMenu() }}>
+                    {!user && <li className="option" onClick={() => { closeMenu() }}>
                         <Link to='/signin'>
                         <a href='signin'>SignIn</a>
                         </Link>
-                    </li>
+                    </li>}
+                    {user && <li className="option signout" onClick={() => { logout() }}>
+                        <a href='signin'>signout</a>
+                    </li>}
                 </ul>
             </div>
 

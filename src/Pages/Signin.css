@@ -2,7 +2,7 @@
   display: grid;
   place-items: center;
   height: 100vh;
-  background-color: wheat;
+  background-color: #f4f4f4;
   position: relative;
 }
 
@@ -39,7 +39,7 @@ form {
 }
 
 .signup-option {
-  background-color: rgb(69, 69, 185, 0.2);
+  background-color: #40B142;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -83,7 +83,7 @@ form {
 }
 
 .signin-button {
-  background-color: rgb(69, 69, 185);
+  background-color: #40B142;
   color: white;
   padding: 18px 20px;
   margin-top: 25px;
@@ -101,6 +101,7 @@ form {
 .forget-pass {
   text-align: center;
   display: block;
+  color: #40B142 !important;
 }
 
 .signup-question {

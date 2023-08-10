@@ -1,43 +1,42 @@
 .dashboard {
   display: grid;
-  place-items: center;
+  /* place-items: center; */
   height: 100vh;
-  background-color: wheat;
+  background-color: #f4f4f4;
   position: relative;
 }
 
 .dashboard-card {
   font-family: sans-serif;
-  width: 80vw;
-  height: 90vh;
-  margin: 60px auto;
+  width: 100vw;
+  /* height: 100vh; */
   display: flex;
-  background-color: #fefaf5;
-  border-radius: 15px;
-  -webkit-box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+  background-color: #FFFFFF;
+  /* border-radius: 15px; */
+  /* -webkit-box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
     0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+    0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12); */
 }
 
 /* Sidebar */
 
 .dashboard-options {
-  background-color: rgb(24, 33, 62);
-  color: wheat;
+  background-color: #40B142;
+  color: #a5a4a4;
   display: flex;
   flex-direction: column;
   flex: 0.25;
-  width: 40vw;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
+  width: 20vw;
+  height: 100vh;
+  position: fixed;
 }
 
 .dashboard-logo {
   margin-top: 50px;
   margin-bottom: 50px !important;
-  color: rgb(234, 68, 74);
-  font-size: 30px;
+  color: black;
+  font-size: 28px;
   font-weight: 800;
   text-align: center;
 }
@@ -45,8 +44,8 @@
 .dashboard-option {
   text-decoration: none;
   padding: 15px;
-  border-bottom: 0.5px solid salmon;
-  border-top: 1px solid rgb(234, 68, 74, 0.5);
+  /* border-bottom: 0.5px solid salmon; */
+  border-top: 1px solid #f4f4f4;
   color: #ffff;
   font-weight: 700;
   text-align: left;
@@ -56,17 +55,17 @@
 }
 
 .dashboard-option:hover {
-  color: rgb(234, 68, 74);
-  border-left: 5px solid rgb(234, 68, 74);
+  color: black;
+  border-left: 5px solid black;
   transition: all 0.5s ease;
-  background-color: #ddd;
+  background-color: #f4f4f4;
 }
 
 .dashboard-option.clicked {
-  color: rgb(234, 68, 74);
-  border-left: 5px solid rgb(234, 68, 74);
+  color: black;
+  border-left: 5px solid black;
   transition: all 0.5s ease;
-  background-color: #ddd;
+  background-color: #f4f4f4;
 }
 
 /* Content of each option in Sidebar */
@@ -75,6 +74,9 @@
   display: flex;
   flex: 0.75;
   width: 80vw;
+  height: 100vw;
+  overflow-y: scroll;
+  margin-left: 20%;
 }
 
 .dashboard-option-icon {
@@ -98,8 +100,75 @@
 .dashboard-option-title {
   text-align: left;
   margin: 10px 25px !important;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.add-btn {
+  float: right;
+  clear: both;
+  font-size: 16px;
+  background-color: #40B142;
+  color: white;
+  padding: 10px;
+  width: fit-content;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.4s;
+}
+
+.table-header {
+  font-size: 22px;
+  text-align: left;
+  margin: 10px 25px;
+  font-weight: 600;
+}
+
+.add-btn:hover {
+  background-color: #1e5e1f;
+  color: #ffff;
+}
+
+.profile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 50px;
+}
+
+.profile .main-card {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  padding: 10px;
+  margin-bottom: 80px;
+  width: 100%;
+  box-shadow: inset 0 -3em 3em rgba(127, 163, 110, 0.2),
+    0 0 0 2px rgb(255, 255, 255),
+    0.3em 0.3em 1em rgba(121, 255, 59, 0.2);
+}
+
+.profile .detail-card {
+  display: flex;
+  align-items: center;
+  padding: 30px;
+  width: 100%;
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.user-name {
   font-size: 20px;
-  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.id {
+  font-size: 15px;
+}
+
+.arrow {
+  width: 20px;
+
 }
 
 .dashboard-title-line {
@@ -113,6 +182,62 @@
 .shortinfo-table {
   margin-top: 5px !important;
   width: 100% !important;
+}
+
+.futo- {
+  color: #FFFFFF;
+}
+
+.key {
+  font-size: 18px;
+  color: #444242;
+}
+
+.img-icon {
+  width: 30px;
+  margin-right: 50px;
+}
+
+.overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.overlay .modal-container {
+  background: white;
+  margin: 20px auto;
+  width: 30%;
+  padding-top: 30px;
+}
+
+.close- {
+  margin-left: 40px;
+  color: red;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.half {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit,.delete {
+  width: 20px;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {
@@ -170,15 +295,27 @@
 
 /* Admin Dashboard Additions */
 
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+
 .addbook-form-input,
 .addmember-form-input,
 .transaction-form-input {
-  padding: 8px;
+  padding: 0.7rem;
   width: 100%;
   max-width: 400px;
   outline: none;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 14px;
   border: 1px solid rgb(219, 219, 219);
   background-color: rgb(255, 255, 255);
 }
@@ -189,16 +326,16 @@
   color: black;
   font-weight: 600;
   margin-top: 10px;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .addbook-submit,
 .addmember-submit,
 .transaction-form-submit {
   padding: 8px 10px;
-  border: 2px solid wheat;
-  background-color: rgb(234, 68, 74);
-  color: wheat;
+  border: 2px solid #f4f4f4;
+  background-color: #40B142;
+  color: black;
   font-weight: 600;
   margin-top: 15px;
   border-radius: 5px;
@@ -207,9 +344,9 @@
 .addbook-submit:hover,
 .addmember-submit:hover,
 .transaction-form-submit:hover {
-  background-color: wheat;
-  color: rgb(234, 68, 74);
-  border: 2px solid rgb(234, 68, 74);
+  background-color: #f4f4f4;
+  color: #40B142;
+  border: 2px solid #40B142;
   transition: all ease 0.5s;
 }
 
@@ -238,14 +375,14 @@
   border: 1px solid #ddd;
   padding: 8px;
   font-size: 14px;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .admindashboard-table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: rgb(24, 33, 62);
+  background-color: #40B142;
   color: white;
 }
 
@@ -265,12 +402,18 @@
 .transaction-form-dropdown option {
   color: black;
   background-color: #ddd;
-  font-size: 18px;
+  font-size: 16px;
+}
+
+.date-picker {
+  margin-bottom: 5px;
+  font-size: 16px;
 }
 
 .semanticdropdown {
   width: 100%;
   max-width: 400px;
+  margin-bottom: 20px;
 }
 
 @media screen and (max-width: 768px) {
@@ -283,7 +426,7 @@
   padding: 5px 10px;
   outline: none;
   border: 1px solid lightgray;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .getmember-dropdown {

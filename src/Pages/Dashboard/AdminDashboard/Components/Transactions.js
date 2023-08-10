@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment"
 
-function AddTransaction() {
+function Transactions() {
 
     const API_URL = process.env.REACT_APP_API_URL
     const [isLoading, setIsLoading] = useState(false)
@@ -159,21 +159,45 @@ function AddTransaction() {
 
     return (
         <div>
-            <p className="dashboard-option-title">Add a Transaction</p>
+            <p className="dashboard-option-title">Request for Book</p>
             <div className="dashboard-title-line"></div>
+            <p className="add-btn">Request Book</p>
+            <table className="admindashboard-table">
+                <tr>
+                    <th>S.No</th>
+                    <th>Book Name</th>
+                    <th>Borrower Name</th>
+                    <th>Date</th>
+                </tr>
+                {
+                    recentTransactions.map((transaction, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{transaction.bookName}</td>
+                                <td>{transaction.borrowerName}</td>
+                                <td>{transaction.updatedAt.slice(0, 10)}</td>
+                            </tr>
+                        )
+                    })
+                }
+            </table>
             <form className='transaction-form' onSubmit={addTransaction}>
-                <label className="transaction-form-label" htmlFor="borrowerId">Borrower<span className="required-field">*</span></label><br />
-                <div className='semanticdropdown'>
-                    <Dropdown
-                        placeholder='Select Member'
-                        fluid
-                        search
-                        selection
-                        value={borrowerId}
-                        options={allMembers}
-                        onChange={(event, data) => setBorrowerId(data.value)}
-                    />
+                <div className='form-group'>
+                    <label className="transaction-form-label" htmlFor="borrowerId">Borrower<span className="required-field">*</span></label>
+                    <div className='semanticdropdown'>
+                        <Dropdown
+                            placeholder='Select Member'
+                            fluid
+                            search
+                            selection
+                            value={borrowerId}
+                            options={allMembers}
+                            onChange={(event, data) => setBorrowerId(data.value)}
+                        />
+                    </div>
                 </div>
+
                 <table className="admindashboard-table shortinfo-table" style={borrowerId === "" ? { display: "none" } : {}}>
                     <tr>
                         <th>Name</th>
@@ -196,6 +220,7 @@ function AddTransaction() {
                         <td>{borrowerDetails.points}</td>
                     </tr>
                 </table>
+                
                 <table className="admindashboard-table shortinfo-table" style={borrowerId === "" ? { display: "none" } : {}}>
                     <tr>
                         <th>Book-Name</th>
@@ -273,30 +298,8 @@ function AddTransaction() {
 
                 <input className="transaction-form-submit" type="submit" value="SUBMIT" disabled={isLoading}></input>
             </form>
-            <p className="dashboard-option-title">Recent Transactions</p>
-            <div className="dashboard-title-line"></div>
-            <table className="admindashboard-table">
-                <tr>
-                    <th>S.No</th>
-                    <th>Book Name</th>
-                    <th>Borrower Name</th>
-                    <th>Date</th>
-                </tr>
-                {
-                    recentTransactions.map((transaction, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{transaction.bookName}</td>
-                                <td>{transaction.borrowerName}</td>
-                                <td>{transaction.updatedAt.slice(0, 10)}</td>
-                            </tr>
-                        )
-                    })
-                }
-            </table>
         </div>
     )
 }
 
-export default AddTransaction
+export default Transactions

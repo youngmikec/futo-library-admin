@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import "../AdminDashboard.css"
 import axios from "axios"
 import { Dropdown } from 'semantic-ui-react'
 import '../../MemberDashboard/MemberDashboard.css'
 import moment from "moment"
+import { AuthContext } from '../../../../Context/AuthContext';
 
 function GetMember() {
 
@@ -13,13 +14,20 @@ function GetMember() {
     const [memberId, setMemberId] = useState(null)
     const [memberDetails, setMemberDetails] = useState(null)
 
+    const { user } = useContext(AuthContext)
+
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.payload.token}`
+    }
+
     //Fetch Members
     useEffect(() => {
         const getMembers = async () => {
             try {
-                const response = await axios.get(API_URL + "api/users/allmembers")
-                setAllMembersOptions(response.data.map((member) => (
-                    { value: `${member?._id}`, text: `${member?.userType === "Student" ? `${member?.userFullName}[${member?.admissionId}]` : `${member?.userFullName}[${member?.employeeId}]`}` }
+                const response = await axios.get(API_URL + "users/allUsers", {headers: headers})
+                setAllMembersOptions(response.data.payload.map((member) => (
+                    { value: `${member?._id}`, text: `${member?.userType === "STUDENT" ? `${member?.fullName}[${member?.admissionId}]` : `${member?.fullName}[${member?.employeeId}]`}` }
                 )))
             }
             catch (err) {
@@ -34,7 +42,7 @@ function GetMember() {
         const getMemberDetails = async () => {
             if(memberId !== null){
                 try {
-                    const response = await axios.get(API_URL + "api/users/getuser/" + memberId)
+                    const response = await axios.get(API_URL + "users/getuser/" + memberId)
                     setMemberDetails(response.data)
                 }
                 catch (err) {
