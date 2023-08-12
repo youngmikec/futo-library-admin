@@ -68,11 +68,11 @@ function Members() {
                 password: password
             }
 
-            if(userType == 'STUDENT') {
+            if(userType === 'STUDENT') {
                 delete userData.employeeId
             }
 
-            if(userType == 'STAFF') {
+            if(userType === 'STAFF') {
                 delete userData.studentId
             }
 
@@ -151,8 +151,8 @@ function Members() {
                                 <td>{member.userType === "STUDENT" ? member.admissionId : member.employeeId}</td>
                                 <td>{member.fullName}</td>
                                 <td className='action'>
-                                    <img className='delete' src={delete_icon} />
-                                    <img className='edit' src={edit_icon} />
+                                    <img alt='' className='delete' src={delete_icon} />
+                                    <img alt='' className='edit' src={edit_icon} />
                                 </td>
                             </tr>
                         )
