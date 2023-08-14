@@ -17,6 +17,7 @@ function Members() {
 
     const { user } = useContext(AuthContext)
 
+    const [isEditting, setIsEditting] = useState(false)
     const [fullName, setFullName] = useState('')
     const [studentId, setStudentnId] = useState('')
     const [employeeId, setEmployeeId] = useState('')
@@ -31,6 +32,8 @@ function Members() {
     const [dob, setDob] = useState('')
     const [dobString, setDobString] = useState('')
     const [members, setMembers] = useState([])
+    const [memberId, setMemberId] = useState()
+    const [member, setMember] = useState()
     const [showAddForm, setShowAddForm] = useState(false)
 
 
@@ -77,7 +80,7 @@ function Members() {
             }
 
             try {
-                const response = await axios.post(API_URL + "auth/register", userData)
+                const response = await isEditting == false ? axios.post(API_URL + "auth/register", userData) : axios.put(API_URL + `auth/register/${memberId}`, userData)
                 if (recentAddedMembers.length >= 5) {
                     recentAddedMembers.splice(-1)
                 }
@@ -105,6 +108,33 @@ function Members() {
             alert("All the fields must be filled")
         }
         setIsLoading(false)
+    }
+
+    const openEditModal = async (memberId) => {
+        console.log('RUNNING')
+        setIsEditting(true)
+        try {
+            const response = await axios.get(API_URL + `users/allUsers?_id=${memberId}`, {headers: headers})
+            const singleMember = response.data.payload[0]
+            setMember(singleMember)
+            setMemberId(singleMember._id)
+            setShowAddForm(true)
+
+            setUserType(singleMember.userType)
+            setFullName(singleMember.fullName)
+            setAddress(singleMember.address)
+            setStudentnId(singleMember.studentId)
+            setEmployeeId(singleMember.employeeId)
+            setAge(singleMember.age)
+            setDob(singleMember.dob)
+            setGender(singleMember.gender)
+            setPhoneNumber(singleMember.phoneNumber)
+            setEmail(singleMember.email)
+            setPassword(singleMember.password)
+
+        } catch (error) {
+            
+        }
     }
 
     const openModal = () => {
@@ -151,7 +181,7 @@ function Members() {
                                 <td>{member.userType === "STUDENT" ? member.admissionId : member.employeeId}</td>
                                 <td>{member.fullName}</td>
                                 <td className='action'>
-                                    <img alt='' className='delete' src={delete_icon} />
+                                    <img alt='' onClick={() => openEditModal(member._id)} className='delete' src={delete_icon} />
                                     <img alt='' className='edit' src={edit_icon} />
                                 </td>
                             </tr>

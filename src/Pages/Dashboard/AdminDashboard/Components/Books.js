@@ -18,6 +18,7 @@ function Books() {
         'Authorization': `Bearer ${user.payload.token}`
     }
 
+    const [isEditting, setIsEditting] = useState(false)
     const [bookName, setBookName] = useState("")
     const [alternateTitle, setAlternateTitle] = useState("")
     const [author, setAuthor] = useState("")
@@ -29,6 +30,8 @@ function Books() {
     const [categories, setCategories] = useState([])
     const [recentAddedBooks, setRecentAddedBooks] = useState([])
     const [books, setBooks] = useState([])
+    const [book, setBook] = useState()
+    const [bookId, setBookId] = useState()
     const [showAddForm, setShowAddForm] = useState(false)
 
 
@@ -47,7 +50,7 @@ function Books() {
             }
         }
         getAllCategories()
-    }, [API_URL])
+    }, [])
 
     /* Adding book function */
     const addBook = async (e) => {
@@ -64,7 +67,7 @@ function Books() {
             bookStatus: bookStatus
         }
         try {
-            const response = await axios.post(API_URL + "books/addbook", BookData, {headers: headers})
+            const response = await isEditting == false ? axios.post(API_URL + "books/addbook", BookData, {headers: headers}) : axios.put(API_URL + `books/updateBook/${bookId}`, BookData, {headers: headers})
             if (recentAddedBooks.length >= 5) {
                 recentAddedBooks.splice(-1)
             }
@@ -80,19 +83,37 @@ function Books() {
             setShowAddForm(false)
             setBooks(response.payload, ...books)
             alert("Book Added Successfully 🎉")
+            setIsEditting(false)
+            setIsLoading(false)
         }
         catch (err) {
             console.log(err)
+            setIsEditting(false)
+            setIsLoading(false)
         }
-        setIsLoading(false)
     }
 
-    const editBook = async () => {
+    const openEditModal = async (bookId) => {
+        setIsEditting(true)
+        try {
+            const response = await axios.get(API_URL + `books/allbooks?_id=${bookId}`, {headers: headers})
+            const singleBook = response.data.payload[0]
+            setBook(singleBook)
+            setBookId(singleBook._id)
+            setShowAddForm(true)
 
-    }
+            setBookName(singleBook.bookName)
+            setAlternateTitle(singleBook.alternateTitle)
+            setAuthor(singleBook.author)
+            setBookCountAvailable(singleBook.bookCountAvailable)
+            setLanguage(singleBook.language)
+            setPublisher(singleBook.publisher)
+            setCategories(singleBook.categories)
+            setBookStatus(singleBook.bookStatus)
 
-    const openEditModal = async () => {
-        
+        } catch (error) {
+            
+        }
     }
 
     const openModal = () => {
@@ -102,13 +123,13 @@ function Books() {
     useEffect(() => {
         const getallBooks = async () => {
             const response = await axios.get(API_URL + "books/allbooks", {headers: headers})
-            const allBooks = await response.data.payload.reverse()
+            const allBooks = response.data.payload.reverse()
             setBooks(allBooks)
             const recentBooks = allBooks.slice(0, 5)
             setRecentAddedBooks(recentBooks)
         }
         getallBooks()
-    }, [API_URL])
+    }, [])
 
 
     return (
@@ -136,8 +157,8 @@ function Books() {
                                     <td>{book.bookStatus}</td>
                                     <td>{book.createdAt.substring(0, 10)}</td>
                                     <td className='action'>
-                                        <img className='delete' src={delete_icon} />
-                                        <img className='edit' src={edit_icon} />
+                                        <img className='delete' src={delete_icon} alt='' />
+                                        <img className='edit' onClick={() => openEditModal(book._id)} src={edit_icon} alt='' />
                                     </td>
                                 </tr>
                             )
