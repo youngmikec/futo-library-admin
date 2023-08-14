@@ -5,6 +5,7 @@ import './Header.css'
 import MenuIcon from '@material-ui/icons/Menu';
 import ClearIcon from '@material-ui/icons/Clear';
 import { AuthContext } from '../Context/AuthContext';
+import logo from '../assets/images/FUTO_logo.png';
 
 function Header() {
 
@@ -27,8 +28,9 @@ function Header() {
     return (
         <div className="header">
             <div className="logo-nav">
-            <Link to='/'>
-                <a href="#home"><span className="futo">FUTO</span>LIBRARY</a>
+            <Link to='/' className='flex gap-10'>
+                <img src={logo} width="40px" alt='logo' />
+                <a href="/"><span className="futo">FUTO</span>LIBRARY</a>
             </Link>
             </div>
             <div className='nav-right'>

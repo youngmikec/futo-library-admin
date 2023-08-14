@@ -1,9 +1,12 @@
 .footer {
   display: flex;
   flex-direction: column;
-  background-color: #40B142;
-  color: #000000;
-  font-size: 16px;
+  /* background-color: #40B142; */
+  background-color: #1C3F21;
+  /* color: #000000; */
+  color: #ffffff;
+  font-weight: lighter;
+  font-size: 14px;
 }
 
 .footer-data {
@@ -27,7 +30,8 @@
 }
 
 .usefull-links a {
-  color: wheat;
+  color: #ffffff;
+  /* color: wheat; */
 }
 
 .librarian-details {
@@ -53,11 +57,11 @@
 
 .social-icon {
   margin: 10px;
+  cursor: pointer;
 }
 
 .copyright-details p {
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 10px;
   letter-spacing: 1.15px;
   text-align: center;
   padding: 20px 10px;

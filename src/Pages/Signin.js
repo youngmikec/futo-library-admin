@@ -2,10 +2,12 @@ import React, { useContext, useState } from 'react'
 import './Signin.css'
 import axios from 'axios'
 import { AuthContext } from '../Context/AuthContext.js'
+import { CircularProgress } from '@material-ui/core'
 
 function Signin() {
     const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [password, setPassword] = useState();
+    const [loading, setLoading] = useState(false);
     // const [userType, setUserType] = useState('STUDENT')
     const [error, setError] = useState("")
     const { dispatch } = useContext(AuthContext)
@@ -13,14 +15,17 @@ function Signin() {
     const API_URL = process.env.REACT_APP_API_URL
     
     const loginCall = async (userCredential, dispatch) => {
+        setLoading(true);
         dispatch({ type: "LOGIN_START" });
         try {
             const res = await axios.post(API_URL+"auth/login", userCredential);
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+            setLoading(false);
         }
         catch (err) {
             dispatch({ type: "LOGIN_FAILURE", payload: err })
             setError("Wrong Password Or Username")
+            setLoading(false);
         }
     }
 
@@ -49,7 +54,9 @@ function Signin() {
                         <label htmlFor="password"><b>Password</b></label>
                         <input className='signin-textbox' type="password" minLength='6' placeholder="Enter Password" name="password" required onChange={(e) => { setPassword(e.target.value) }} />
                         </div>
-                    <button className="signin-button">Log In</button>
+                    <button className="signin-button">
+                        { loading ? <CircularProgress color='#ffffff' /> : "Log In" }
+                    </button>
                     <a className="forget-pass" href="#home">Forgot password?</a>
                 </form>
                 <div className='signup-option'>
