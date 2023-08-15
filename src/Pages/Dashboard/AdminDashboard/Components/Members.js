@@ -19,7 +19,7 @@ function Members() {
 
     const [isEditting, setIsEditting] = useState(false)
     const [fullName, setFullName] = useState('')
-    const [studentId, setStudentnId] = useState('')
+    const [regNumber, setRegNumber] = useState('')
     const [employeeId, setEmployeeId] = useState('')
     const [address, setAddress] = useState('')
     const [email, setEmail] = useState('')
@@ -43,7 +43,7 @@ function Members() {
     ]
 
     const userTypes = [
-        { value: 'STAFF', text: 'Staff' },
+        { value: 'ADMIN', text: 'Staff' },
         { value: 'STUDENT', text: 'Student' }
     ]
 
@@ -60,7 +60,7 @@ function Members() {
             const userData = {
                 userType: userType,
                 fullName: fullName,
-                studentId: studentId,
+                regNumber: regNumber,
                 employeeId: employeeId,
                 age: age,
                 dob: dobString,
@@ -75,19 +75,19 @@ function Members() {
                 delete userData.employeeId
             }
 
-            if(userType === 'STAFF') {
-                delete userData.studentId
+            if(userType === 'ADMIN') {
+                delete userData.regNumber
             }
 
             try {
-                const response = await isEditting == false ? axios.post(API_URL + "auth/register", userData) : axios.put(API_URL + `auth/register/${memberId}`, userData)
+                const response = await isEditting == false ? axios.post(API_URL + "auth/register", userData, { headers }) : axios.put(API_URL + `users/updateuser/${memberId}`, userData, { headers })
                 if (recentAddedMembers.length >= 5) {
                     recentAddedMembers.splice(-1)
                 }
                 setRecentAddedMembers([response.data, ...recentAddedMembers])
                 setFullName(null)
                 setUserType("STUDENT")
-                setStudentnId(null)
+                setRegNumber(null)
                 setEmployeeId(null)
                 setAddress(null)
                 setPhoneNumber(null)
@@ -97,7 +97,6 @@ function Members() {
                 setAge(null)
                 setDob(null)
                 setDobString(null)
-                alert("Member Added")
                 setShowAddForm(false)
             }
             catch (err) {
@@ -108,10 +107,10 @@ function Members() {
             alert("All the fields must be filled")
         }
         setIsLoading(false)
+        getMembers()
     }
 
     const openEditModal = async (memberId) => {
-        console.log('RUNNING')
         setIsEditting(true)
         try {
             const response = await axios.get(API_URL + `users/allUsers?_id=${memberId}`, {headers: headers})
@@ -123,10 +122,10 @@ function Members() {
             setUserType(singleMember.userType)
             setFullName(singleMember.fullName)
             setAddress(singleMember.address)
-            setStudentnId(singleMember.studentId)
+            setRegNumber(singleMember.regNumber)
             setEmployeeId(singleMember.employeeId)
             setAge(singleMember.age)
-            setDob(singleMember.dob)
+            // setDob(singleMember.dob)
             setGender(singleMember.gender)
             setPhoneNumber(singleMember.phoneNumber)
             setEmail(singleMember.email)
@@ -141,20 +140,21 @@ function Members() {
         setShowAddForm(true)
     }
 
+    const getMembers = async () => {
+        try {
+            const response = await axios.get(API_URL + "users/allUsers", {headers: headers})
+            const allMembers = await response.data.payload.reverse()
+            setMembers(allMembers)
+            const recentMembers = allMembers.slice(0, 5)
+            setRecentAddedMembers(recentMembers)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
     //Fetch Members
     useEffect(() => {
-        const getMembers = async () => {
-            try {
-                const response = await axios.get(API_URL + "users/allUsers", {headers: headers})
-                const allMembers = await response.data.payload
-                setMembers(allMembers)
-                const recentMembers = allMembers.slice(0, 5)
-                setRecentAddedMembers(recentMembers)
-            }
-            catch (err) {
-                console.log(err)
-            }
-        }
         getMembers()
     }, [API_URL])
 
@@ -178,11 +178,11 @@ function Members() {
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{member.userType}</td>
-                                <td>{member.userType === "STUDENT" ? member.admissionId : member.employeeId}</td>
+                                <td>{member.userType === "STUDENT" ? member.regNumber : member.employeeId}</td>
                                 <td>{member.fullName}</td>
                                 <td className='action'>
-                                    <img alt='' onClick={() => openEditModal(member._id)} className='delete' src={delete_icon} />
-                                    <img alt='' className='edit' src={edit_icon} />
+                                    <img alt='' className='delete' src={delete_icon} />
+                                    <img alt='' onClick={() => openEditModal(member._id)} className='edit' src={edit_icon} />
                                 </td>
                             </tr>
                         )
@@ -214,8 +214,8 @@ function Members() {
                                 </div>
 
                                 <div className="form-group">
-                                    <label className="addmember-form-label" htmlFor={userType === "STUDENT" ? "studentId" : "employeeId"}>{userType === "STUDENT" ? "Student Id" : "Employee Id"}<span className="required-field">*</span></label>
-                                    <input className="addmember-form-input" type="text" value={userType === "STUDENT" ? studentId : employeeId} required onChange={(e) => { userType === "STUDENT" ? setStudentnId(e.target.value) : setEmployeeId(e.target.value) }} />
+                                    <label className="addmember-form-label" htmlFor={userType === "STUDENT" ? "regNumber" : "employeeId"}>{userType === "STUDENT" ? "Reg number" : "Employee Id"}<span className="required-field">*</span></label>
+                                    <input className="addmember-form-input" maxLength={11} minLength={11} type="text" value={userType === "STUDENT" ? regNumber : employeeId} required onChange={(e) => { userType === "STUDENT" ? setRegNumber(e.target.value) : setEmployeeId(e.target.value) }} />
                                 </div>
                            </div>
 

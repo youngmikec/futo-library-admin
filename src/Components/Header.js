@@ -29,7 +29,7 @@ function Header() {
         <div className="header">
             <div className="logo-nav">
             <Link to='/' className='flex gap-10'>
-                <img src={logo} width="40px" alt='logo' />
+                <img src={logo} width="25px" alt='logo' />
                 <a href="/"><span className="futo">FUTO</span>LIBRARY</a>
             </Link>
             </div>

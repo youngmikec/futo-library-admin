@@ -22,17 +22,17 @@ function App() {
             <Home />
           </Route>
           <Route exact path='/signin'>
-            {user ? (user.payload?.user?.isAdmin ? <Redirect to='/dashboard@admin' />:<Redirect to='/dashboard@member' />) : <Signin />}
+            {user ? (user.payload?.user?.userType === 'ADMIN' ? <Redirect to='/dashboard@admin' />:<Redirect to='/dashboard@member' />) : <Signin />}
           </Route>
           <Route exact path='/dashboard@member'>
-            {/* {user ? (user.payload?.user?.isAdmin === false ? <MemberDashboard /> : <Redirect to='/' />) : <Redirect to='/' />} */}
-            <MemberDashboard />
+            {user ? (user.payload?.user?.userType === 'STUDENT' === false ? <MemberDashboard /> : <Redirect to='/' />) : <Redirect to='/' />}
+            {/* <MemberDashboard /> */}
           </Route>
           {/* <Route exact path='/dashboard@admin'>
             {user ? (user.isAdmin === true ? <AdminDashboard /> : <Redirect to='/' />) : <Redirect to='/' />}
           </Route> */}
           <Route exact path='/dashboard@admin'>
-            {user ? (user.payload.user.isAdmin ? <AdminDashboard/>:<MemberDashboard />) : <Redirect to='/' />}
+            {user ? (user.payload?.user?.userType === 'ADMIN' ? <AdminDashboard/>:<MemberDashboard />) : <Redirect to='/' />}
           </Route>
           <Route exact path='/books'>
             <Header />

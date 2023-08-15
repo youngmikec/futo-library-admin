@@ -29,8 +29,14 @@ function Transactions() {
     const [allMembers, setAllMembers] = useState([])
     const [allBooks, setAllBooks] = useState([])
     const [transactions, setTransactions] = useState([])
+    const [transaction, setTransaction] = useState()
+    const [isEditting, setIsEditting] = useState(false)
+    const [transactionId, setTransactionId] = useState()
 
     const [fromDate, setFromDate] = useState(null)
+    const [returnDateString, setReturnDateString] = useState(null)
+
+    const [returnDate, setReturnDate] = useState(null)
     const [fromDateString, setFromDateString] = useState(null)
 
     const [toDate, setToDate] = useState(null)
@@ -46,7 +52,6 @@ function Transactions() {
 
     /* Adding a Transaction */
     const addTransaction = async (e) => {
-        console.log('RUNNING')
         e.preventDefault();
         setIsLoading(true)
         if (bookId !== "" && borrowerId !== "" && transactionType !== "" && fromDate !== null && toDate !== null) {
@@ -61,6 +66,7 @@ function Transactions() {
                     transactionType: transactionType,
                     fromDate: fromDateString,
                     toDate: toDateString,
+                    returnDate: returnDateString
                 }
                 try {
                     const response = await axios.post(API_URL + "transactions/add-transaction", transactionData, { headers })
@@ -99,6 +105,30 @@ function Transactions() {
             alert("Fields must not be empty")
         }
         setIsLoading(false)
+        setShowAddForm(false)
+        getTransactions()
+    }
+
+    const openEditModal = async (transactionId) => {
+        setIsEditting(true)
+        try {
+            const response = await axios.get(API_URL + `transactions/all-transactions?_id=${transactionId}`, {headers: headers})
+            const singleTransaction = response.data.payload[0]
+            setTransaction(singleTransaction)
+            setTransactionId(singleTransaction._id)
+            setShowAddForm(true)
+
+            setBorrowerId(singleTransaction.borrowerId)
+            setBookId(singleTransaction.bookId)
+            setTransactionType(singleTransaction.transactionType)
+            setFromDate(singleTransaction.fromDateString)
+            setToDate(singleTransaction.toDateString)
+            // setFromDateString(null)
+            // setToDateString(null)
+
+        } catch (error) {
+            
+        }
     }
 
     const openModal = () => {
@@ -108,7 +138,7 @@ function Transactions() {
     const getTransactions = async () => {
         try {
             const response = await axios.get(API_URL + "transactions/all-transactions", { headers })
-            const allTransactions = response.data.payload;
+            const allTransactions = response.data.payload.reverse();
             if(allTransactions){
                 setTransactions(allTransactions)
                 setRecentTransactions(allTransactions.slice(0, 5))
@@ -219,7 +249,7 @@ function Transactions() {
                                     <td>{transaction.updatedAt.slice(0, 10)}</td>
                                     <td className='action'>
                                         <img alt='' className='delete' src={delete_icon} />
-                                        <img alt='' className='edit' src={edit_icon} />
+                                        <img alt='' onClick={() => openEditModal(transaction._id)} className='edit' src={edit_icon} />
                                     </td>
                                 </tr>
                             )
@@ -302,51 +332,74 @@ function Transactions() {
                                 </tbody>
                             </table> */}
 
-                            <label className="transaction-form-label" htmlFor="bookName">Book Name<span className="required-field">*</span></label><br />
-                            <div className='semanticdropdown'>
-                                <Dropdown
-                                    placeholder='Select a Book'
-                                    fluid
-                                    search
-                                    selection
-                                    options={allBooks}
-                                    value={bookId}
-                                    onChange={(event, data) => getBookDetails(data.value)}
+                            <div className='half'>
+                                <div className='form-group'>
+                                    <label className="transaction-form-label" htmlFor="bookName">Book Name<span className="required-field">*</span></label><br />
+                                    <div className='semanticdropdown'>
+                                        <Dropdown
+                                            placeholder='Select a Book'
+                                            fluid
+                                            search
+                                            selection
+                                            options={allBooks}
+                                            value={bookId}
+                                            onChange={(event, data) => getBookDetails(data.value)}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className='form-group'>
+                                    <label className="transaction-form-label" htmlFor="transactionType">Transaction Type<span className="required-field">*</span></label><br />
+                                    <div className='semanticdropdown'>
+                                        <Dropdown
+                                            placeholder='Select Transaction'
+                                            fluid
+                                            selection
+                                            value={transactionType}
+                                            options={transactionTypes}
+                                            onChange={(event, data) => setTransactionType(data.value)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='form-group'>
+                                <label className="transaction-form-label" htmlFor="from-date">From Date<span className="required-field">*</span></label><br />
+                                <DatePicker
+                                    className="date-picker"
+                                    placeholderText="MM/DD/YYYY"
+                                    selected={fromDate}
+                                    onChange={(date) => { setFromDate(date); setFromDateString(moment(date).format("MM/DD/YYYY")) }}
+                                    minDate={new Date()}
+                                    dateFormat="MM/dd/yyyy"
                                 />
                             </div>
 
-                            <label className="transaction-form-label" htmlFor="transactionType">Transaction Type<span className="required-field">*</span></label><br />
-                            <div className='semanticdropdown'>
-                                <Dropdown
-                                    placeholder='Select Transaction'
-                                    fluid
-                                    selection
-                                    value={transactionType}
-                                    options={transactionTypes}
-                                    onChange={(event, data) => setTransactionType(data.value)}
+                            <div className='form-group'>
+                                <label className="transaction-form-label" htmlFor="to-date">To Date<span className="required-field">*</span></label><br />
+                                <DatePicker
+                                    className="date-picker"
+                                    placeholderText="MM/DD/YYYY"
+                                    selected={toDate}
+                                    onChange={(date) => { setToDate(date); setToDateString(moment(date).format("MM/DD/YYYY")) }}
+                                    minDate={new Date()}
+                                    dateFormat="MM/dd/yyyy"
                                 />
                             </div>
-                            <br />
 
-                            <label className="transaction-form-label" htmlFor="from-date">From Date<span className="required-field">*</span></label><br />
-                            <DatePicker
-                                className="date-picker"
-                                placeholderText="MM/DD/YYYY"
-                                selected={fromDate}
-                                onChange={(date) => { setFromDate(date); setFromDateString(moment(date).format("MM/DD/YYYY")) }}
-                                minDate={new Date()}
-                                dateFormat="MM/dd/yyyy"
-                            />
-
-                            <label className="transaction-form-label" htmlFor="to-date">To Date<span className="required-field">*</span></label><br />
-                            <DatePicker
-                                className="date-picker"
-                                placeholderText="MM/DD/YYYY"
-                                selected={toDate}
-                                onChange={(date) => { setToDate(date); setToDateString(moment(date).format("MM/DD/YYYY")) }}
-                                minDate={new Date()}
-                                dateFormat="MM/dd/yyyy"
-                            />
+                            {
+                                isEditting && <div className='form-group'>
+                                    <label className="transaction-form-label" htmlFor="to-date">Return Date<span className="required-field">*</span></label><br />
+                                    <DatePicker
+                                        className="date-picker"
+                                        placeholderText="MM/DD/YYYY"
+                                        selected={toDate}
+                                        onChange={(date) => { setReturnDate(date); setReturnDateString(moment(date).format("MM/DD/YYYY")) }}
+                                        minDate={new Date()}
+                                        dateFormat="MM/dd/yyyy"
+                                    />
+                                </div>
+                            }
 
                             <input className="transaction-form-submit" type="submit" value="SUBMIT" disabled={isLoading}></input>
                         </form>

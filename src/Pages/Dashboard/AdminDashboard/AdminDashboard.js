@@ -5,7 +5,7 @@ import Members from './Components/Members'
 import Books from './Components/Books';
 import Pofile from './Components/Profile';
 
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import logo from '../../../assets/images/FUTO_logo.png';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import BookIcon from '@material-ui/icons/Book';
 import ReceiptIcon from '@material-ui/icons/Receipt';
@@ -50,7 +50,7 @@ function AdminDashboard() {
                 {/* Sidebar */}
                 <div className={sidebar ? "dashboard-options active" : "dashboard-options"}>
                     <div className='dashboard-logo'>
-                        <LibraryBooksIcon style={{ fontSize: 30 }} />
+                        <img src={logo} width="40px" alt='logo' />
                         <p className="logo-name"><span className="futo-">FUTO</span>LIBRARY</p>
                     </div>
                     <p className={`dashboard-option ${active === "profile" ? "clicked" : ""}`} onClick={() => { setActive("profile"); setSidebar(false) }}><AccountCircleIcon className='dashboard-option-icon' /> Profile</p>

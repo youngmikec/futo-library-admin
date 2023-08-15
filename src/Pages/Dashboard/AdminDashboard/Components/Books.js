@@ -50,57 +50,60 @@ function Books() {
             }
         }
         getAllCategories()
-    }, [])
+    }, [API_URL])
 
     /* Adding book function */
     const addBook = async (e) => {
         e.preventDefault()
         setIsLoading(true)
-        const BookData = {
-            bookName: bookName,
-            alternateTitle: alternateTitle,
-            author: author,
-            bookCountAvailable: bookCountAvailable,
-            language: language,
-            publisher: publisher,
-            categories: categories,
-            bookStatus: bookStatus
-        }
-        try {
-            const response = await isEditting == false ? axios.post(API_URL + "books/addbook", BookData, {headers: headers}) : axios.put(API_URL + `books/updateBook/${bookId}`, BookData, {headers: headers})
-            if (recentAddedBooks.length >= 5) {
-                recentAddedBooks.splice(-1)
+        if(bookName !== null && author !== null && bookCountAvailable !== null && language !== null && publisher !== null && categories !== null && bookStatus !== null) {
+
+            const BookData = {
+                bookName: bookName,
+                alternateTitle: alternateTitle,
+                author: author,
+                bookCountAvailable: bookCountAvailable,
+                language: language,
+                publisher: publisher,
+                categories: categories,
+                bookStatus: bookStatus
             }
-            setRecentAddedBooks([response.data, ...recentAddedBooks])
-            setBookName("")
-            setAlternateTitle("")
-            setAuthor("")
-            setBookCountAvailable(null)
-            setLanguage("")
-            setPublisher("")
-            setBookStatus("")
-            setCategories([])
-            setShowAddForm(false)
-            setBooks(response.payload, ...books)
-            alert("Book Added Successfully 🎉")
-            setIsEditting(false)
-            setIsLoading(false)
-        }
-        catch (err) {
-            console.log(err)
-            setIsEditting(false)
-            setIsLoading(false)
+            try {
+                const response = await isEditting == false ? axios.post(API_URL + "books/addbook", BookData, {headers: headers}) : axios.put(API_URL + `books/updateBook/${bookId}`, BookData, {headers: headers})
+                if (recentAddedBooks.length >= 5) {
+                    recentAddedBooks.splice(-1)
+                }
+                setRecentAddedBooks([response.data, ...recentAddedBooks])
+                setBookName("")
+                setAlternateTitle("")
+                setAuthor("")
+                setBookCountAvailable(null)
+                setLanguage("")
+                setPublisher("")
+                setBookStatus("")
+                setCategories([])
+                setShowAddForm(false)
+                setBooks(response.payload, ...books)
+                alert("Book Added Successfully 🎉")
+                setIsEditting(false)
+                setIsLoading(false)
+            }
+            catch (err) {
+                console.log(err)
+                setIsEditting(false)
+                setIsLoading(false)
+            }
         }
     }
 
     const openEditModal = async (bookId) => {
         setIsEditting(true)
+        setShowAddForm(true)
         try {
             const response = await axios.get(API_URL + `books/allbooks?_id=${bookId}`, {headers: headers})
             const singleBook = response.data.payload[0]
             setBook(singleBook)
             setBookId(singleBook._id)
-            setShowAddForm(true)
 
             setBookName(singleBook.bookName)
             setAlternateTitle(singleBook.alternateTitle)
