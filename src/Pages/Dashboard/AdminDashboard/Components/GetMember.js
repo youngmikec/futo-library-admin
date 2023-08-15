@@ -27,7 +27,7 @@ function GetMember() {
             try {
                 const response = await axios.get(API_URL + "users/allUsers", {headers: headers})
                 setAllMembersOptions(response.data.payload.map((member) => (
-                    { value: `${member?._id}`, text: `${member?.userType === "STUDENT" ? `${member?.fullName}[${member?.admissionId}]` : `${member?.fullName}[${member?.employeeId}]`}` }
+                    { value: `${member?._id}`, text: `${member?.userType === "STUDENT" ? `${member?.fullName}[${member?.regNumber}]` : `${member?.fullName}[${member?.employeeId}]`}` }
                 )))
             }
             catch (err) {
@@ -73,7 +73,7 @@ function GetMember() {
                         <img className="user-profileimage" src="./assets/images/Profile.png" alt=""></img>
                         <div className="user-info">
                             <p className="user-name">{memberDetails?.userFullName}</p>
-                            <p className="user-id">{memberDetails?.userType === "Student" ? memberDetails?.admissionId : memberDetails?.employeeId}</p>
+                            <p className="user-id">{memberDetails?.userType === "Student" ? memberDetails?.regNumber : memberDetails?.employeeId}</p>
                             <p className="user-email">{memberDetails?.email}</p>
                             <p className="user-phone">{memberDetails?.mobileNumber}</p>
                         </div>
